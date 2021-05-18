@@ -147,7 +147,7 @@ in->signal();
 
 ### Explanation
 
-Thus,we see that in avoids starvation by allowing multiple readers to read data simultaneously 
+Thus,we see that it avoids starvation by allowing multiple readers to read data simultaneously 
 but blocks all the processes when a writer is writing its data untill it finishes.
 Although other processes are blocked when a writer process is executed,but FIFO nature of semaphore
 is here to avoid the starvation.Thus no process waits for infinite time avoiding starvation.
