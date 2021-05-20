@@ -119,7 +119,7 @@ in->signal() //signal in semaphore
 //[Critical section] Reader is reading the data
 
 
-out->wait();
+out->wait(pid);
 ctrout++; // a reader process just completed
 
 if (waiting==true && ctrin==ctrout)
@@ -129,14 +129,14 @@ out->signal();
 
 //Writer process
 
-in->wait();
-out->wait();
+in->wait(pid);
+out->wait(pid);
 if (ctrin==ctrout)
    out->signal();   
 else
   waiting=true;
 out->signal();
-wrt->wait();
+wrt->wait(pid);
 waiting=false;
 
 //[Critical section] a writer is writing data 
@@ -156,7 +156,7 @@ Let's put it more clearly by taking an example of a process train.
 Suppose our queue has a train `RRRWWRWRW` of process.
 First, all 3 first reader processes are allowed to read the data
 of object simultaneously.A writer process on 4th number sets its waiting to true
-untill all reader processes are finished.As soon as ctrin==ctrout(All 4 readers have finished)
+untill all reader processes are finished.As soon as ctrin==ctrout(All 3 readers have finished)
 The writer process enters the critical section and further processes in queue is blocked untill 
 the writer finishes.When the writer finishes,it releases the semaphore to allow the other waiting 
 processes to get executed.
